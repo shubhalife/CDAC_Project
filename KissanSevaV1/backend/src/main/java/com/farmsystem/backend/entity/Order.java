@@ -36,11 +36,11 @@ public class Order
 	@Column(name= "crop_category")
 	private String crop_category;
 	
-	@NotEmpty
+	
 	@Column(name ="quantity")
 	private double quantity;
 	
-	@NotEmpty
+	
 	@Column(name="total_amount")
 	private double total_amount;
 	

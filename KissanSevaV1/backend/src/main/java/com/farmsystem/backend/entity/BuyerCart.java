@@ -34,11 +34,11 @@ public class BuyerCart
 	@Column(name="crop")
 	private String crop;
 	
-	@NotEmpty
+	
 	@Column(name="quantity")
 	private double quantity;
 	
-	@NotEmpty
+	
 	@Column(name="expectedprice")
 	private double expectedprice;
 	

@@ -36,11 +36,11 @@ public class Product
 	@Column(name= "crop")
 	private String crop;
 	
-	@NotEmpty
+
 	@Column(name= "quantity")
 	private double quantity;
 	
-	@NotEmpty
+	
 	@Column(name= "expected_Price")
 	private double expected_Price;
 
