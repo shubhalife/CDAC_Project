@@ -1,93 +1,78 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
-function BuyerList() {
-  const [responseData, setResponseData] = useState([]);
-  const history = useHistory();
-  const buyerList = () => {
-    axios
-      .get("http://localhost:9099/admin/buyer-list")
-      .then((response) => {
-        setResponseData(response.data);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
 
+export default function BuyersList() {
+  const [list, setList] = useState([])
+
+  //let navigate = useNavigate();
+  const editUser = (item, index) => {
+    // navigate(`edit?edit=true&id=${item.bid}`)
+    /* eslint-disable no-restricted-globals */
+    //path=`edit?edit=true&id=${item.bid}`;
+    // browserHistory.push(path)
+    window.location = `/admin-buyerupdate/edit?edit=true&bid=${item.bid}`;
+  }
+
+  const deleteuser = async (item, index) => {
+    alert(item.bid)
+    const url = `http://localhost:9099/admin/delBuyer/${item.bid}`;
+    await axios.delete(url)
+    getdata();
+
+  }
+
+
+  const getdata = async () => {
+    const url = "http://localhost:9099/admin/buyer-list";
+    const response = await axios.get(url)
+    const res = response.data
+
+    setList(res)
+  }
   useEffect(() => {
-    buyerList();
-  }, []);
+    getdata();
+  }, [])
 
-  //   const buyerDelete = (evnt) => {
-  //     axios
-  //       .delete("http://localhost:9099/car/" + evnt.target.value)
-  //       .then((response) => {
-  //         buyerList();
-  //       })
-  //       .catch((error) => {
-  //         alert(error);
-  //       });
-  //   };
 
   return (
-    <>
-      <div class="container mt-3">
-        <h2>Buyer Information</h2>
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">FirstName</th>
+            <th scope="col">LastName</th>
+            <th scope="col">Email</th>
+            <th scope="col">Mobile</th>
+            <th scope="col">Username</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list.map((item, index) =>
+            <tr key={index}>
+              <th scope="row">{item.id}</th>
+              <td>{item.firstname}</td>
+              <td>{item.lastname}</td>
+              <td>{item.email}</td>
+              <td>{item.contact}</td>
+              <td>{item.user_name}</td>
+              <td>
+                <span className="badge bg-primary"
+                  role="button"
+                  onClick={() => editUser(item, index)}>
+                  Edit
 
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>user_name</th>
-              <th>email</th>
-              <th>firstname</th>
-              <th>lastname</th>
-              <th>address</th>
-              {/* <th>Delete</th> */}
+                </span>
+                <span className="badge bg-danger" role="button" onClick={() => deleteuser(item, index)}>
+                  Del
+                </span>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {responseData.map((val) => (
-              <tr key="{val.fid}">
-                <td>{val.user_name}</td>
-                <td>{val.email}</td>
-                <td>{val.firstname}</td>
-                <td>{val.lastname}</td>
-                <td>{val.address}</td>
-                {/* <td>
-                  <Link
-                    to="/farmer/profile"
-                    state={val}
-                    class="btn btn-primary"
-                  >
-                    Update
-                  </Link>{" "}
-                </td> */}
-                {/* <td>
-                  <button
-                    type="button"
-                    id={val.id}
-                    value={val.id}
-                    onClick={buyerDelete}
-                  >
-                    X
-                  </button>{" "}
-                </td> */}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button
-          type="button"
-          className="btn btn-danger mt-3"
-          onClick={history.goBack}
-        >
-          Back
-        </button>
-      </div>
-    </>
-  );
+          )}
+        </tbody>
+      </table>
+    </div>
+  )
 }
-export default BuyerList;

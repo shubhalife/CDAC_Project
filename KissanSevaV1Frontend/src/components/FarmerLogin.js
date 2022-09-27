@@ -3,6 +3,7 @@ import { useState } from "react";
 import AuthenticateService from "./AuthenticateService";
 import axios from "axios";
 import { useEffect } from "react";
+import { Alert, AlertTitle } from "@mui/material";
 
 function FarmerLogin() {
   const myStyle = {
@@ -14,6 +15,7 @@ function FarmerLogin() {
     backgroundRepeat: "no-repeat",
   };
 
+  let [iserror, setIserror] = useState(false);
   // useEffect(() => {
   //   AuthenticateService.logout();
   // });
@@ -49,7 +51,9 @@ function FarmerLogin() {
           console.log(login.user_name);
           // sethasLoginFailed(true);
           setLogin({ user_name: "", password: "" });
-          alert("Invalid Password/Username");
+          //alert("Invalid Password/Username");
+          setIserror(true);
+          setTimeout(() => setIserror(false), 2500)
         }
       })
       .catch((error) => {
@@ -114,6 +118,12 @@ function FarmerLogin() {
                   <a href="/forgot-password">Forgot password?</a>
                 </p>
               </div>
+              {iserror &&
+                <Alert severity="error">
+                  <AlertTitle>Error</AlertTitle>
+                  Invalid username/password — <strong>check it out!</strong>
+                </Alert>
+              }
             </div>
           </div>
         </div>

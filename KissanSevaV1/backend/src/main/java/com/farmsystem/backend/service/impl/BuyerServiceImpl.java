@@ -10,6 +10,7 @@ import com.farmsystem.backend.entity.Buyer;
 import com.farmsystem.backend.entity.BuyerCart;
 import com.farmsystem.backend.entity.Order;
 import com.farmsystem.backend.entity.Product;
+import com.farmsystem.backend.exceptions.ResourceNotFoundException;
 import com.farmsystem.backend.repository.BuyerCartRepo;
 import com.farmsystem.backend.repository.BuyerRepo;
 import com.farmsystem.backend.repository.FarmerRepo;
@@ -38,8 +39,8 @@ public class BuyerServiceImpl implements BuyerService {
 	@Override
 	public String buyerLogin(Buyer buyer) {
 		
-		System.out.println(buyer.getPassword());
-		System.out.println(buyer.getUser_name());
+		//System.out.println(buyer.getPassword());
+		//System.out.println(buyer.getUser_name());
 		List<Buyer> buyerList = buyerRepo.findAll();              
 		
 		String passMsg = "pass" ;
@@ -96,7 +97,7 @@ public class BuyerServiceImpl implements BuyerService {
 	@Override
 	public List<Order> ConfirmOrders(Buyer buyer) {
 		
-		System.out.println(buyer.getUser_name());
+		//System.out.println(buyer.getUser_name());
 		String uname = buyer.getUser_name();
 		
 		int bid = buyerRepo.findByName(uname);
@@ -111,12 +112,12 @@ public class BuyerServiceImpl implements BuyerService {
 		
 		String buyeruname = order.getBuyer().getUser_name();
 		
-		System.out.println(buyeruname);
+		//System.out.println(buyeruname);
 		int bid = buyerRepo.findByName(buyeruname);
 		order.getBuyer().setBid(bid);
 			
 		String farmername = order.getFarmer().getFirstname();
-		System.out.println(farmername);
+		//System.out.println(farmername);
 		int fid = farmerRepo.findByFid(farmername);
 		order.getFarmer().setFid(fid);
 		orderRepo.save(order);
@@ -125,11 +126,14 @@ public class BuyerServiceImpl implements BuyerService {
 	}
 
 	@Override
-	public Optional<Buyer> getBuyers(String username) {
+	public Buyer getBuyers(String username) {
+		//System.out.println("im here");
 		
 		int bid = buyerRepo.findByName(username);
         
-		return buyerRepo.findById(bid);
+		Buyer buyer =buyerRepo.findById(bid).orElseThrow(()-> new ResourceNotFoundException("buyer", "Id", bid));
+		
+		return buyer;
 	}
 
 }

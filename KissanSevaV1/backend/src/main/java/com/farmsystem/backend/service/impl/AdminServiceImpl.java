@@ -86,5 +86,18 @@ public class AdminServiceImpl implements AdminService{
 		
 		return productList;
 	}
+	
+	@Override
+	public void deleteBuyerByid(Integer id)
+	{
+		buyerRepo.deleteById(id);
+	}
+	
+	@Override
+	public void deleteFarmerByid(Integer id)
+	{
+		farmerRepo.deleteById(id);
+	}
+
 
 }

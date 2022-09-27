@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.farmsystem.backend.entity.Farmer;
 import com.farmsystem.backend.entity.Order;
 import com.farmsystem.backend.entity.Product;
+import com.farmsystem.backend.exceptions.ResourceNotFoundException;
 import com.farmsystem.backend.repository.FarmerRepo;
 import com.farmsystem.backend.repository.OrderRepo;
 import com.farmsystem.backend.repository.ProductRepo;
@@ -27,11 +28,15 @@ public class FarmerServiceImpl implements FarmerService{
 	ProductRepo productRepo;
 
 	@Override
-	public Optional<Farmer> getFarmer(String username) {
+	public Farmer getFarmer(String username) {
+		
+		//System.out.println("im here");
 		
 		int fid = farmerRepo.findByName(username);
+		
+		Farmer farmer = farmerRepo.findById(fid).orElseThrow(()-> new ResourceNotFoundException("farmer", "Id", fid));
         
-		return farmerRepo.findById(fid);
+		return farmer;
 	}
 
 	@Override

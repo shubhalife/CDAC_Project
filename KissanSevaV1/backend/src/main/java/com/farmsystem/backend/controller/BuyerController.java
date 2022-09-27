@@ -3,6 +3,8 @@ package com.farmsystem.backend.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +46,7 @@ public class BuyerController {
 	
 	
 	@PostMapping("/Registration")
-	public String regBuyer(@RequestBody Buyer buyer) {
+	public String regBuyer(@Valid @RequestBody Buyer buyer) {
 		
 		String message = this.buyerService.registerBuyer(buyer);
 		     
@@ -102,9 +104,9 @@ public class BuyerController {
 		
 	
 	@GetMapping("/profile/{username}")
-	public Optional<Buyer> getBuyer(@PathVariable String username) {
+	public Buyer getBuyer(@PathVariable String username) {
 			
-		Optional<Buyer> buyer =this.buyerService.getBuyers(username);
+		Buyer buyer =this.buyerService.getBuyers(username);
 				          
 		return buyer;
 			    

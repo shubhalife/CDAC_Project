@@ -69,7 +69,7 @@ function Header() {
                   <strong>Info</strong>
                 </a>
               </li>
-              {!AuthenticateService.isUserLoggedIn() && (
+              {(AuthenticateService.isUserLoggedIn() && sessionStorage.getItem("userType") === "admin") && (
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"

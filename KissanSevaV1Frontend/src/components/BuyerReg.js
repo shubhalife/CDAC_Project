@@ -1,193 +1,192 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import { Alert, AlertTitle } from "@mui/material";
 
-function BuyerReg()
-{
+function BuyerReg() {
 
-  const myStyle={
-    backgroundImage: 
-"url('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg')",
-    height:'10vh',
-    marginTop:'0px',
+  const myStyle = {
+    backgroundImage:
+      "url('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg')",
+    height: '10vh',
+    marginTop: '0px',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-};
-const myStyle1={
-  backgroundImage: 
-"url('https://scx2.b-cdn.net/gfx/news/2017/farming.jpg')",
+  };
+  const myStyle1 = {
+    backgroundImage:
+      "url('https://scx2.b-cdn.net/gfx/news/2017/farming.jpg')",
 
-  height:'130vh',
-  marginTop:'0px',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-  borderRadius: "25px"
-};
+    height: '130vh',
+    marginTop: '0px',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    borderRadius: "25px"
+  };
   const [regestration, setRegestration] = useState({
     firstname: "",
     lastname: "",
-      email: "",
-      contact: "",
-      user_name: "",
-      address:"",
-      password: "",  
-      
-    });
+    email: "",
+    contact: "",
+    user_name: "",
+    address: "",
+    password: "",
 
-const handleChange = (e) => {
-  const name = e.target.name;
-  const value = e.target.value;
-  setRegestration({ ...regestration, [name]: value });
-};
-
-const [isvalid, setIsvalid] = useState(false);
-
-
-console.log(regestration);
-console.log(isvalid);
-const handleSubmit = (e) => {
-   e.preventDefault();
-  console.log("clicked")
-  if(isvalid)
-  {
-  axios
-  .post("http://localhost:9099/buyer/Registration", {
-   
-    email: regestration.email,
-    firstname: regestration.firstname,
-    lastname: regestration.lastname,
-    password: regestration.password,
-    contact: regestration.contact,
-    user_name: regestration.user_name,
-    address:regestration.address
-   
-  })
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.log(error.response);
   });
 
- setRegestration({
-   firstname: "",
-   lastname: "",
-   email: "",
-   contact: "",
-   user_name: "",
-   address:"",
-   password: "",
- });
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setRegestration({ ...regestration, [name]: value });
+  };
 
- alert("Registration succefull")
-}
-else{
-  alert("Registration Unsuccefull")
-}
-
-}
+  const [isvalid, setIsvalid] = useState(false);
+  let [status, setStatus] = useState(false);
+  let [iserror, setIserror] = useState(false);
 
 
+  console.log(regestration);
+  console.log(isvalid);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("clicked")
+    if (isvalid) {
+      axios
+        .post("http://localhost:9099/buyer/Registration", {
 
-const [fnameErr, setFnameErr] = useState("")
-function firstNameValidation(){
-  if(regestration.firstname === "")
-  {
-      setFnameErr("* Invalid Firstname") ;
-      setIsvalid(false);
+          email: regestration.email,
+          firstname: regestration.firstname,
+          lastname: regestration.lastname,
+          password: regestration.password,
+          contact: regestration.contact,
+          user_name: regestration.user_name,
+          address: regestration.address
+
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+
+      setRegestration({
+        firstname: "",
+        lastname: "",
+        email: "",
+        contact: "",
+        user_name: "",
+        address: "",
+        password: "",
+      });
+      setStatus(true);
+      setTimeout(() => setStatus(false), 2500)
+      //alert("Registration succefull")
+      window.location = "/admin-welcome/admin1";
+    }
+    else {
+      setIserror(true);
+      setTimeout(() => setIserror(false), 2500)
+
+      // alert("Registration Unsuccefull")
+    }
+
   }
-  else{
+
+
+
+  const [fnameErr, setFnameErr] = useState("")
+  function firstNameValidation() {
+    if (regestration.firstname === "") {
+      setFnameErr("* Invalid Firstname");
+      setIsvalid(false);
+    }
+    else {
       setFnameErr("");
       setIsvalid(true);
+    }
   }
-}
 
-const [lnameErr, setLnameErr] = useState("")
-function lastNameValidation(){
-  if(regestration.lastname === "")
-  {
-    setLnameErr("* Invalid Last Name") ;
-    setIsvalid(false);
+  const [lnameErr, setLnameErr] = useState("")
+  function lastNameValidation() {
+    if (regestration.lastname === "") {
+      setLnameErr("* Invalid Last Name");
+      setIsvalid(false);
+    }
+    else {
+      setLnameErr("");
+      setIsvalid(true);
+    }
   }
-  else{
-    setLnameErr("");
-    setIsvalid(true);
-  }
-}
 
-const [emailErr, setEmailErr] = useState("")
-function emailValidation(){
-const regex =/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-;
-  if(regex.test(regestration.email))
-  {
-    setEmailErr("") ;
-    setIsvalid(true)
+  const [emailErr, setEmailErr] = useState("")
+  function emailValidation() {
+    const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      ;
+    if (regex.test(regestration.email)) {
+      setEmailErr("");
+      setIsvalid(true)
+    }
+    else {
+      setEmailErr("* Invalid Email");
+      setIsvalid(false);
+    }
   }
-  else{
-    setEmailErr("* Invalid Email");
-    setIsvalid(false);
-  }
-}
 
-const [contactNoErr, setConatctNoErr] = useState("")
-function contactNoValidation(){
-  if(regestration.contact.length != 10)
-  {
-    setConatctNoErr("* Invalid Conatact No") ;
-    setIsvalid(false);
+  const [contactNoErr, setConatctNoErr] = useState("")
+  function contactNoValidation() {
+    if (regestration.contact.length != 10) {
+      setConatctNoErr("* Invalid Conatact No");
+      setIsvalid(false);
+    }
+    else {
+      setConatctNoErr("");
+      setIsvalid(true);
+    }
   }
-  else{
-    setConatctNoErr("");
-    setIsvalid(true);
-  }
-}
 
-const [userNameErr, setUserNameErr] = useState("")
-function userNameValidation(){
-  if(regestration.user_name === "")
-  {
-    setUserNameErr("* Invalid User Name") ;
-    setIsvalid(false);
+  const [userNameErr, setUserNameErr] = useState("")
+  function userNameValidation() {
+    if (regestration.user_name === "") {
+      setUserNameErr("* Invalid User Name");
+      setIsvalid(false);
+    }
+    else {
+      setUserNameErr("");
+      setIsvalid(true);
+    }
   }
-  else{
-    setUserNameErr("");
-    setIsvalid(true);
-  }
-}
 
-const [passwordErr, setPasswordErr] = useState("")
-function passwordValidation(){
-  if(regestration.password === "")
-  {
-    setPasswordErr("* Invalid Password") 
-    setIsvalid(false);
+  const [passwordErr, setPasswordErr] = useState("")
+  function passwordValidation() {
+    if (regestration.password === "") {
+      setPasswordErr("* Invalid Password")
+      setIsvalid(false);
+    }
+    else {
+      setPasswordErr("");
+      setIsvalid(true);
+    }
   }
-  else{
-    setPasswordErr("");
-    setIsvalid(true);
-  }
-}
 
-const [addressErr, setAddressErr] = useState("")
-function addressValidation(){
-  if(regestration.address === "")
-  {
-    setAddressErr("* Invalid Address") ;
-    setIsvalid(false);
+  const [addressErr, setAddressErr] = useState("")
+  function addressValidation() {
+    if (regestration.address === "") {
+      setAddressErr("* Invalid Address");
+      setIsvalid(false);
+    }
+    else {
+      setAddressErr("");
+      setIsvalid(true);
+    }
   }
-  else{
-    setAddressErr("");
-    setIsvalid(true);
-  }
-}
 
 
-return (
-  
+  return (
+
     <>
-    {/* <section className="vh-100" > */}
-    
+      {/* <section className="vh-100" > */}
+
       <div className="container-fluid h-100" style={myStyle}>
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-lg-8 col-xl-9" >
@@ -198,7 +197,7 @@ return (
                     <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                       Buyer-Registration
                     </p>
-                  
+
                     <form className="mx-1 mx-md-4" method="Post">
                       <div className="d-flex flex-column  mb-4">
                         <i className="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -215,9 +214,9 @@ return (
                           />
                         </div>
                         <div>
-                        <span className="text-danger">{fnameErr}</span>
+                          <span className="text-danger">{fnameErr}</span>
                         </div>
-                        
+
                       </div>
 
                       <div className="d-flex flex-column  mb-4">
@@ -235,9 +234,9 @@ return (
                           />
                         </div>
                         <div>
-                        <span className="text-danger">{lnameErr}</span>
+                          <span className="text-danger">{lnameErr}</span>
                         </div>
-                        
+
                       </div>
 
                       <div className="d-flex flex-column  mb-4">
@@ -255,9 +254,9 @@ return (
                           />
                         </div>
                         <div>
-                        <span className="text-danger">{emailErr}</span>
+                          <span className="text-danger">{emailErr}</span>
                         </div>
-                        
+
                       </div>
 
                       <div className="d-flex flex-column  mb-4">
@@ -275,10 +274,10 @@ return (
                           />
                         </div>
                         <div>
-                        <span className="text-danger">{contactNoErr}</span>
+                          <span className="text-danger">{contactNoErr}</span>
                         </div>
-                        </div>
-                        <div className="d-flex flex-column  mb-4">
+                      </div>
+                      <div className="d-flex flex-column  mb-4">
                         <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
                           <input
@@ -293,13 +292,13 @@ return (
                           />
                         </div>
                         <div>
-                        <span className="text-danger">{addressErr}</span>
+                          <span className="text-danger">{addressErr}</span>
                         </div>
-                        
+
                       </div>
 
 
-                      
+
                       <div className="d-flex flex-column  mb-4">
                         <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                         <div className="form-outline flex-fill mb-0">
@@ -315,9 +314,9 @@ return (
                           />
                         </div>
                         <div>
-                        <span className="text-danger">{userNameErr}</span>
+                          <span className="text-danger">{userNameErr}</span>
                         </div>
-                        
+
                       </div>
 
                       <div className="d-flex flex-column  mb-4">
@@ -335,15 +334,25 @@ return (
                           />
                         </div>
                         <div>
-                        <span className="text-danger">{passwordErr}</span>
+                          <span className="text-danger">{passwordErr}</span>
                         </div>
-                        
+
                       </div>
 
                       <button type="submit" onClick={handleSubmit} className="btn btn-primary">Submit</button>
-                     </form>
+                    </form>
+                    {status && <Alert severity="success">
+                      <AlertTitle>Success</AlertTitle>
+                      Registration successfull — <strong>check it out!</strong>
+                    </Alert>}
+                    {iserror &&
+                      <Alert severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        Check all fields — <strong>check it out!</strong>
+                      </Alert>
+                    }
                   </div>
-                 
+
                 </div>
               </div>
             </div>
@@ -351,10 +360,10 @@ return (
         </div>
       </div>
       {/* </section> */}
-    
-  </>
-  
-);
+
+    </>
+
+  );
 };
 
 export default BuyerReg;

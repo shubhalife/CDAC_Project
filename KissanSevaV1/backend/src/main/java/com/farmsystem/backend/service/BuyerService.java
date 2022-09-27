@@ -24,6 +24,6 @@ public interface BuyerService {
 	
 	String addOrder(Order order);
 	
-	Optional<Buyer>getBuyers(String username);
+	Buyer getBuyers(String username);
 
 }

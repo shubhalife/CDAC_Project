@@ -26,6 +26,7 @@ import AdminWelcome from "./components/Admin/AdminWelcome";
 import ForgotPassword from "./components/ForgotPassword";
 import FarmerList from "./components/Admin/FarmerList";
 import BuyerList from "./components/Admin/BuyerList";
+import BuyerUpdate from "./components/Admin/BuyerUpdate";
 
 function App() {
   return (
@@ -38,8 +39,10 @@ function App() {
           <Route path="/farmer-login" component={FarmerLogin} />
           <Route path="/buyer-login" component={BuyerLogin} />
           <Route path="/admin-login" component={AdminLogin} />
-          <Route path="/farmer-reg" component={FarmerReg} />
-          <Route path="/Buyer-reg" component={BuyerReg} />
+          <Route path="/admin-buyerupdate" component={BuyerUpdate} />
+
+          <AuthenticatedRout path="/farmer-reg" component={FarmerReg} />
+          <AuthenticatedRout path="/Buyer-reg" component={BuyerReg} />
           <Route path="/farmer-list" component={FarmerList} />
           <Route path="/buyer-list" component={BuyerList} />
           <AuthenticatedRout path="/buyer-product" component={BuyerProduct} />

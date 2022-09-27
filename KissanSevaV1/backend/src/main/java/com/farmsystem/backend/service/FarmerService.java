@@ -12,7 +12,7 @@ import com.farmsystem.backend.entity.Product;
 public interface FarmerService {
 	
 	
-	Optional<Farmer> getFarmer(String username);
+	Farmer getFarmer(String username);
 	
 	String forgotPassword(Farmer farmer);
 	

@@ -20,4 +20,9 @@ public interface AdminService {
 	
 	List<Product>getAllProducts();
 	
+	void deleteBuyerByid(Integer id);
+	
+	void deleteFarmerByid(Integer id);
+
+	
 }

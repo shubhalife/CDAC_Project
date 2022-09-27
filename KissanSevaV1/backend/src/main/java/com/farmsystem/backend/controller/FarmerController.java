@@ -3,6 +3,8 @@ package com.farmsystem.backend.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,9 +31,9 @@ public class FarmerController
 	FarmerService farmerService;
 	
 	@GetMapping("/profile/{username}")
-	public Optional<Farmer> getFarmer(@PathVariable String username) {
+	public Farmer getFarmer(@PathVariable String username) {
 		
-		Optional<Farmer> farmer = this.farmerService.getFarmer(username);
+		Farmer farmer = this.farmerService.getFarmer(username);
 		
 		return farmer;    
 	}
@@ -48,7 +50,7 @@ public class FarmerController
 	
 	
 	@PostMapping("/Registration")
-	public String regFarmer(@RequestBody Farmer farmer) {
+	public String regFarmer(@Valid @RequestBody Farmer farmer) {
 
 		String message = this.farmerService.regFarmer(farmer);
 		  
@@ -88,6 +90,7 @@ public class FarmerController
 	@PostMapping("/orders/change-status")
 	public String getOrder(@RequestBody Order order)
 	{
+		System.out.println("im here");
 		String message = this.farmerService.getOrder(order);
 		
 		return message;

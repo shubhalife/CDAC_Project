@@ -43,6 +43,10 @@ public class ProfileServiceImpl implements ProfileService {
 		{
 			farmerRepo.updateAddress(farmer.getAddress(), username);
 		}
+		if(farmer.getPassword()!= "")
+		{
+			farmerRepo.updatePassword(farmer.getPassword(), username);
+		}
 		
 		return "updated";
 	}
@@ -71,6 +75,10 @@ public class ProfileServiceImpl implements ProfileService {
 		if(buyer.getAddress()!= "")
 		{
 			buyerRepo.updateAddress(buyer.getAddress(), username);
+		}
+		if(buyer.getPassword()!= "")
+		{
+			buyerRepo.updatePassword(buyer.getPassword(), username);
 		}
 		
 		return "updated";

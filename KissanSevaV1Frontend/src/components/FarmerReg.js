@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { Alert, AlertTitle } from "@mui/material";
+
 function FarmerReg() {
   const myStyle = {
     backgroundImage:
@@ -30,6 +32,10 @@ function FarmerReg() {
     address: "",
     password: "",
   });
+
+  let [status, setStatus] = useState(false);
+  let [iserror, setIserror] = useState(false);
+
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -71,10 +77,15 @@ function FarmerReg() {
         address: "",
         password: "",
       });
-
-      alert("Registration successfull");
+      setStatus(true);
+      setTimeout(() => setStatus(false), 2500)
+      window.location = "/admin-welcome/admin1";
+      //alert("Registration successfull");
     } else {
-      alert("Registration Unsuccessfull");
+      setIserror(true);
+      setTimeout(() => setIserror(false), 2500)
+
+      // alert("Registration Unsuccessfull");
     }
   };
 
@@ -316,6 +327,18 @@ function FarmerReg() {
                             Submit
                           </button>
                         </form>
+
+                        {status && <Alert severity="success">
+                          <AlertTitle>Success</AlertTitle>
+                          Registration successfull — <strong>check it out!</strong>
+                        </Alert>}
+                        {iserror &&
+                          <Alert severity="error">
+                            <AlertTitle>Error</AlertTitle>
+                            Check all fields — <strong>check it out!</strong>
+                          </Alert>
+                        }
+
                       </div>
                     </div>
                   </div>
