@@ -15,9 +15,10 @@ export default function BuyersList() {
   }
 
   const deleteuser = async (item, index) => {
-    alert(item.bid)
+
     const url = `http://localhost:9099/admin/delBuyer/${item.bid}`;
-    await axios.delete(url)
+    await axios.delete(url);
+    alert("deleted successfully");
     getdata();
 
   }

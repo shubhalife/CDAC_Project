@@ -15,9 +15,10 @@ export default function FarmerList() {
   }
 
   const deleteuser = async (item, index) => {
-    alert(item.fid)
+
     const url = `http://localhost:9099/admin/delFarmer/${item.fid}`;
-    await axios.delete(url)
+    await axios.delete(url);
+    alert("deleted successfully");
     getdata();
 
   }

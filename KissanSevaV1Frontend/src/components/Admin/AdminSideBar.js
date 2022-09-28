@@ -12,7 +12,7 @@ function AdminSideBar() {
   const SidebarData = [
     {
       title: "Home",
-      path: `/`,
+      path: `/admin-welcome/admin`,
       icon: <AiIcons.AiFillHome />,
       cName: "nav-text",
     },
@@ -30,13 +30,13 @@ function AdminSideBar() {
     },
     {
       title: "See Orders",
-      path: "/order-list",
+      path: "/orders-list",
       icon: <FaIcons.FaCartPlus />,
       cName: "nav-text",
     },
     {
       title: "See Products",
-      path: "/product-list",
+      path: "/Admin-product",
       icon: <FaIcons.FaEnvelopeOpenText />,
       cName: "nav-text",
     },

@@ -95,6 +95,7 @@ function BuyerProduct() {
           if (response.data === "added_successfully") {
 
             alert("Product Added to the cart")
+            //setSelectedQuantity({ ...selectedquantity, [product.quantity]: '', });
           }
           console.log(response.data);
 

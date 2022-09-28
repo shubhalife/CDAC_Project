@@ -64,9 +64,9 @@ function Header() {
               <li className="nav-item">
                 <a
                   className="nav-link"
-                  href="https://en.wikipedia.org/wiki/Farm"
+                  href="https://enam.gov.in/web/weather_forecast"
                 >
-                  <strong>Info</strong>
+                  <strong>Weather Forecast</strong>
                 </a>
               </li>
               {(AuthenticateService.isUserLoggedIn() && sessionStorage.getItem("userType") === "admin") && (
@@ -79,7 +79,7 @@ function Header() {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    <strong>Sign-Up</strong>
+                    <strong>Register</strong>
                   </a>
                   <ul
                     className="dropdown-menu"
